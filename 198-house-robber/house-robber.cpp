@@ -3,22 +3,24 @@ public:
     int rob(vector<int>& nums) {
         int l=nums.size();
         vector<int>dp(l+1,-1);
-        return count(l,nums,dp);
-    }
-    int count(int l,vector<int>nums,vector<int>&dp)
-    {
+        dp[0]=nums[0];
         if(l==1)
-            return nums[0];
-        else if (l==2)
+        return dp[0];       
+        else if(l==2)
         {
-            return max(nums[0],nums[1]);
+            dp[1]=max(nums[0],nums[1]);
+            return dp[1];
         }
         else
         {
-            if(dp[l]!=-1)
-                return dp[l];
-            else
-                return dp[l]=max(nums[l-1]+count(l-2,nums,dp),count(l-1,nums,dp));
+            dp[0]=nums[0];
+            dp[1]=max(nums[0],nums[1]);
+        for (int i=2;i<l;i++)
+        {
+            
+            dp[i]=max(nums[i]+dp[i-2],dp[i-1]);
+        }
+        return dp[l-1];
         }
     }
 };
